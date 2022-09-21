@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" src="css2/main.css2">
+    <style>
+        .problem{
+            max-width:180px;
+            border:solid 2px black;
+            padding:10px;
+            border-radius: 20px;;
+        }
+    </style>
+</head>
+<body>
+      <div>
+        <lable for="">Operation</lable>
+         <select name="" id="operation">
+            <option value="add">Add</option>
+            <option value="sub">Sub</option>
+            <option value="multi">Multiply</option>
+            <option value="divide">Divide</option>
+        </select>    
+      </div>
+
+      <div>  
+        <lable for="">Range</lable>
+         <select name="" id="range">
+            <option value="9">1 to 9</option>
+            <option value="19">1 to 19</option>
+            <option value="29">1 to 29</option>
+            <option value="39">1 to 39</option>
+            <option value="49">1 to 49</option>
+            <option value="99">1 to 99</option>
+        </select>    
+      </div>
+      <div>
+        <button id="start">Start</button>
+        <button id="calculate" disabled>calculate</button>
+      </div>
+      <div class="problems">
+        <div class="problem">
+            <h3>10</h3>
+            <h3>+</h3>
+            <h3>20</h3><hr>
+            <input type="text" class="answer  "><hr>
+        </div>
+      </div>
+
+      <script>
+        var startEle = document.getElementById('start');
+        var problemsEle = document.getElementsByClassName('problems')[0];
+        var calculateEle = document.getElementById('calculate');
+
+        function generateRandomNumber(max){
+            return parseInt(Math.random()*max)
+        }
+
+        function textToSymbol(text){
+            switch(text){
+                case 'add':
+                    return '+'
+                    break;
+                case 'sub':
+                    return '-'
+                    break;
+                case 'multi':
+                    return '*'
+                    break;
+                default:
+                    return '/'
+                    break;
+            }
+        }
+
+        function resetProblems(){
+            problemsEle.innerHTML = "";
+        }
+        function enableCalculate(){
+            calculateEle.removeAttribute('disabled')
+        }
+
+        function updateProblem(number1,number2,operation){
+            //create problem div
+                let problemEle = document.createElement('div');
+                problemEle.setAttribute('class','problem');
+            //create h3 for number1
+                let number1Element = document.createElement('h3');
+            //update value of number1
+                number1Element.innerText = number1;
+            //create h3 for operation
+                let operationEle = document.createElement('h3')
+                operationEle.innerText = textToSymbol(operation);
+            //update symbol of operation
+            //create h3 for number2
+                let number2Element = document.createElement('h3');
+            //update value of number2
+                number2Element.innerText = number2;
+            //create hr
+            //create input
+                let inputEle = document.createElement('input');
+            //update input class name
+                inputEle.setAttribute('class','answer')
+            //update input type text
+                inputEle.setAttribute('type','text')
+            //Append h3s,hr,input inside problems
+                problemEle.append(number1)
+                problemEle.append(operationEle)
+                problemEle.append(number2Element)
+                problemEle.append(inputEle)
+            //Append inside problems
+                problemsEle.append(problemEle);
+        }
+        
+        var stage1Operation = function(){
+            var operationEle = document.getElementById('operation'),
+                rangeEle = document.getElementById('range'),
+                operation = operationEle.value,
+                range = parseInt(rangeEle.value),
+                randomNumber1,randomNumber2;
+            
+                if(operation !== 'divide'){
+                    resetProblems();
+                    for(let i=1; i<=16; i++){
+                        randomNumber1 = generateRandomNumber(range);
+                        randomNumber2 = generateRandomNumber(range);
+                        updateProblem(randomNumber1,randomNumber2,operation);
+                    }
+                    enableCalculate();
+                }
+        }
+
+        startEle.addEventListener('click',stage1Operation);
+      </script>
+      
+</body>  
+</html>
